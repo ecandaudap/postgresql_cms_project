@@ -1,6 +1,6 @@
 import psycopg
 
-conn_string = "dbname=cms user=postgres password= host=localhost"
+conn_string = "dbname=cms user=postgres host=localhost"
 
 def select(columns, table, where):
     with psycopg.connect(conn_string) as connection:
@@ -35,14 +35,23 @@ def insert(table, columns, values):
 
     with connection.cursor() as cursor:
 
-        column_list = ", ".join(columns)        
+        column_list = ", ".join(columns)    
         value_string = f"VALUES {values}"
 
         query = f"INSERT INTO {table} ({column_list}) {value_string};"
         cursor.execute(query)
 
-        result = cursor.fetchall()
-    
-    cursor.execute()
+    connection.commit()
     connection.close()
-    return result
+
+def update(table, values, where):
+    connection = psycopg.connect(conn_string)
+
+    with connection.cursor() as cursor:
+        
+        where_string = f"WHERE {where[0]} {where[1]} {where[2]}" if where else ""
+        query = f"UPDATE {table} SET {values} {where_string}"
+        cursor.execute(query)
+
+    connection.commit()
+    connection.close()

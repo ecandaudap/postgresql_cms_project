@@ -14,6 +14,19 @@ def select(columns, table, where):
     
     return result
 
+def select_join(columns, table, join, where):
+    with psycopg.connect(conn_string) as connection:
+        with connection.cursor() as cursor:
+            column_list = ", ".join(columns)
+            where_string = f"WHERE {where[0]} {where[1]} {where[2]}" if where else ""
+            query = f"SELECT {column_list} FROM {table} {join} {where_string};"
+            cursor.execute(query)
+            
+            result = cursor.fetchall()
+    
+    return result
+
+
 def delete(table, where):
     connection = psycopg.connect(conn_string)
 

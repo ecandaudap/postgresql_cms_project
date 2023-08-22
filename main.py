@@ -1,8 +1,7 @@
-import db.py
-import article.py
-import category.py
-import author.py
-import psycopg
+import db
+import article
+import category
+import author
 
 def show_menu():
     menu = """
@@ -36,7 +35,7 @@ while True:
         content = input("Please insert the content")
         author = input("Please insert the author_id")
         category = input("Please insert the category_id")
-        articles.create(tittle,content,author,category)
+        article.create(tittle,content,author,category)
 
     elif option == "2":
         print(" 2. Modify existing articles, please follow the intructions below: ")
@@ -45,19 +44,19 @@ while True:
         content = input("Please insert the content")
         author = input("Please insert the author_id")
         category = input("Please insert the category_id")
-        articles.update(id,tittle,content,author,category)
+        article.update(id,tittle,content,author,category)
 
     elif option == "3":
         id = input(" 3. Deactivate articles, please select the id to deactivate: ")
-        deactivate_articles(id)
+        article.deactivate(id)
 
     elif option == "4":
         print(" 4. Get the list of all articles, please follow the intructions below: ") 
-        articles.get()
+        article.get()
 
-   # elif option == "5":
-    #    print(" 5. Get article details, please follow the intructions below: ")  
-     #   article.()
+    elif option == "5":
+        cat= input(" 5. Get article details, please select the category: ")  
+        article.et_by_category(cat)
     
 
     #elif option == "6":
@@ -68,9 +67,9 @@ while True:
         print(" 7. Get active/published articles, the active articles are shown below")  
         article.get_active()
 
-   # elif option == "8":
-    #    autor = input(" 8. Get articles from an author, please select the author to get info ")
-     #   article.get_autor(autor)
+    elif option == "8":
+        autor = input(" 8. Get articles from an author, please select the author to get info ")
+        article.get_by_autho(autor)
 
     elif option == "9":
         print(" 9. Create a new author, please follow the intructions below: ")
